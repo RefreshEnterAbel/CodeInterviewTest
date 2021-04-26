@@ -20,7 +20,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed'
         ]);
-    
+
         // user create on database
         $user = User::create([
             'name' => $request->input('name'),
@@ -28,9 +28,10 @@ class RegisterController extends Controller
             'email' => $request->input('email')
         ]);
 
-        return $request->all();
+//        return $request->all();
         return $this->success([
             'token' => $user->createToken('API Token')->plainTextToken
         ]);
     }
+
 }

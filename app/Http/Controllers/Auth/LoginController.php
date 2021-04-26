@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     // use api josn trim
-    use ApiResponser; 
+    use ApiResponser;
 
-    // Login methiod 
+    // Login methiod
     public function login(Request $request)
     {
         // check request data
@@ -21,7 +21,7 @@ class LoginController extends Controller
             'email' => 'required|string|email|',
             'password' => 'required|string|min:6'
         ]);
-        // if user attempt on database 
+        // if user attempt on database
         if (!Auth::attempt($attr)) {
             return $this->error('Credentials not match Please input corect pasword and email', 401);
         }
@@ -31,7 +31,7 @@ class LoginController extends Controller
         ]);
     }
 
-     // Logout methiod 
+     // Logout methiod
     public function logout()
     {
         auth()->user()->tokens()->delete();
