@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Traits\ApiResponser;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -15,12 +16,15 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         // check request data
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users,email',
+            'email' => 'required|string|email|unique:users',
             'password' => 'required|string|min:6|confirmed'
         ]);
 
+        if($validator->fails()){
+            return  $validator->errors();
+        }
         // user create on database
         $user = User::create([
             'name' => $request->input('name'),

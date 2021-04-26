@@ -7,23 +7,32 @@ use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
-    // use api josn trim
+    // use api trim
     use ApiResponser;
 
-    // Login methiod
+    // Login method
     public function login(Request $request)
     {
         // check request data
-        $attr = $request->validate([
-            'email' => 'required|string|email|',
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
             'password' => 'required|string|min:6'
         ]);
+
+        if($validator->fails()){
+            return  $validator->errors();
+        }
+        $data = [
+            'email' => $request->input('email'),
+            'password' => $request->input('password')
+        ];
         // if user attempt on database
-        if (!Auth::attempt($attr)) {
-            return $this->error('Credentials not match Please input corect pasword and email', 401);
+        if (!Auth::attempt($data)) {
+            return $this->error('Credentials not match Please input correct password and email', 401);
         }
 
         return $this->success([
@@ -31,7 +40,7 @@ class LoginController extends Controller
         ]);
     }
 
-     // Logout methiod
+     // Logout method
     public function logout()
     {
         auth()->user()->tokens()->delete();
