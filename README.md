@@ -1,4 +1,4 @@
-#**Code Interview test on laravel sanctum authentication** 
+# Code Interview test on laravel sanctum authentication** 
 
 ## API router url
 
