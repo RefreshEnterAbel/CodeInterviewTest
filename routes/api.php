@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+
+//register user api router link
+Route::post('/auth/register', [RegisterController::class, 'register']);
+//login user api router link
+Route::post('/auth/login', [LoginController::class, 'login']);
+
+// middleware on auth:sanctum (after login)
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/me',  [AuthController::class, 'user']);
+    Route::post('/auth/logout', [LoginController::class, 'logout']);
 });
