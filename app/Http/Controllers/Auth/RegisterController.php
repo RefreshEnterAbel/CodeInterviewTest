@@ -9,12 +9,11 @@ use App\Traits\ApiResponser;
 
 class RegisterController extends Controller
 {
-    // use ApiResponser;
+    use ApiResponser;
 
     // register method
     public function register(Request $request)
     {
-       
         // check request data
         $request->validate([
             'name' => 'required|string|max:255',

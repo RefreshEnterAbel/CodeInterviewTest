@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     // use api josn trim
-    // use ApiResponser; 
+    use ApiResponser; 
 
     // Login methiod 
     public function login(Request $request)
